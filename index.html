@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sun · Earth · Moon — Interactive Phase Visualizer</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%23ffcc66'/%3E%3Ccircle cx='62' cy='42' r='10' fill='%23999'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Bare-specifier imports used by vendored Three.js addons resolve here. -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./lib/three/three.module.js",
+      "three/addons/": "./lib/three/addons/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="app">
+    <div id="scene-container"></div>
+    <div id="viewContext" class="view-context">3D space view · orientation is camera-dependent</div>
+
+    <!-- Loading overlay -->
+    <div id="loading"><div class="spinner"></div><div>Generating textures &amp; building scene…</div></div>
+
+    <!-- Left control panel -->
+    <aside id="panel" class="card">
+      <h1>☉ Sun · Earth · Moon</h1>
+      <p class="subtitle">Interactive phase visualizer</p>
+
+      <section>
+        <h2>Date &amp; time (UTC)</h2>
+        <input type="datetime-local" id="datetime" />
+        <div class="row">
+          <button id="stepBack" title="−1 day">« 1d</button>
+          <button id="now" title="Now">Now</button>
+          <button id="stepFwd" title="+1 day">1d »</button>
+        </div>
+        <div class="row">
+          <button id="play">▶ Play</button>
+          <label class="speed">
+            Speed: <span id="speedVal"></span>
+            <input type="range" id="speed" min="-0.5" max="2" step="0.001" value="0.5" />
+          </label>
+        </div>
+        <div class="date-display" id="dateDisplay"></div>
+      </section>
+
+      <section>
+        <h2>Observer location</h2>
+        <select id="location"></select>
+        <div class="scale-note" id="obsName"></div>
+        <div class="scale-note" id="obsLatLon"></div>
+      </section>
+
+      <section>
+        <h2>Scale</h2>
+        <label><input type="radio" name="scale" value="educational" checked /> Educational</label>
+        <label><input type="radio" name="scale" value="realistic" /> Realistic (true ratios)</label>
+        <div class="scale-note" id="scaleNote"></div>
+      </section>
+
+      <section>
+        <h2>Camera</h2>
+        <div class="grid2">
+          <button id="space">Space view</button>
+          <button id="top">Top-down</button>
+          <button id="earth">Earth orbit</button>
+          <button id="moon">Earth-facing Moon</button>
+          <button id="alignment">Alignment</button>
+          <button id="observer">Observer sky</button>
+        </div>
+        <button id="resetCam" class="full">Reset camera</button>
+      </section>
+
+      <section>
+        <h2>Helpers</h2>
+        <label><input type="checkbox" id="tOrbits" checked /> Orbit paths</label>
+        <label><input type="checkbox" id="tLabels" checked /> Labels</label>
+        <label><input type="checkbox" id="tBorders" checked /> Country borders</label>
+        <label><input type="checkbox" id="tMoonLock" checked /> Moon near-side marker</label>
+        <label><input type="checkbox" id="tLines" checked /> Sun–Earth–Moon lines</label>
+        <label><input type="checkbox" id="tRays" checked /> Sunlight rays</label>
+      </section>
+
+      <p class="hint">Drag to rotate · scroll to zoom · right-drag to pan</p>
+    </aside>
+
+    <!-- Right info panels -->
+    <aside id="info" class="card">
+      <section class="phase">
+        <h2>Moon phase</h2>
+        <div class="phase-row">
+          <canvas id="phaseMini" width="110" height="110"></canvas>
+          <div>
+            <div class="phase-name" id="phaseName">—</div>
+            <div class="phase-sub" id="phaseIllum">—</div>
+            <div class="phase-sub" id="phaseAge">—</div>
+            <div class="phase-sub" id="phaseWax">—</div>
+            <div class="phase-sub rotation-status" id="moonRotation">—</div>
+          </div>
+        </div>
+        <div class="phase-view-note">Earth-facing schematic · celestial north is up · waxing light is on the right</div>
+      </section>
+
+      <section>
+        <h2>Observer's sky (now)</h2>
+        <div class="kv"><span>Sun</span><span id="sunSky">—</span></div>
+        <div class="kv"><span>Moon</span><span id="moonSky">—</span></div>
+      </section>
+
+      <section>
+        <h2>Why does the Moon look like this?</h2>
+        <div id="explain" class="explain"></div>
+      </section>
+    </aside>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

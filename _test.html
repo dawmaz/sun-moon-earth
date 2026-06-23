@@ -1,0 +1,20 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"></head><body><pre id="out">loading</pre>
+<script type="module">
+import { computeState } from "./src/astronomy.js";
+import { SCALE_PROFILES, earthDistanceScene, moonDistanceScene } from "./src/constants.js";
+const sf = { earthDistanceScene, moonDistanceScene };
+const d = new Date("2026-06-19T22:30:00Z");
+const s = computeState(d, SCALE_PROFILES.educational, sf);
+const o = document.getElementById("out");
+o.textContent = JSON.stringify({
+  phaseName: s.phaseName,
+  phasePhi: s.phasePhi,
+  elongation: s.elongation,
+  phaseAngle: s.phaseAngle,
+  illuminatedFraction: s.illuminatedFraction,
+  moonDistKm: s.moon.distanceKm,
+  moonLon: s.moon.longitude,
+  earthToSun: s.earthToSun,
+  earthToMoon: s.earthToMoon,
+}, null, 2);
+</script></body></html>

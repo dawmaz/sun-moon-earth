@@ -1,0 +1,16 @@
+{
+  "name": "sun-moon-earth",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "start": "python3 -m http.server 4173",
+    "test": "node --test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
